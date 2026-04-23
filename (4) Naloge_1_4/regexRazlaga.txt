@@ -1,0 +1,110 @@
+REGEX - RAZLAGA VAJ
+
+============================================================
+1) BESEDE ZA "AND", ZAČETEK STAVKA ALI PO TOČKI
+============================================================
+
+KODA:
+poisci = re.compile(r'\b(?:(?<=and)\s|^|\.\s)([a-z]+)', re.IGNORECASE)
+
+RAZLAGA:
+- \b → meja besede
+- (?<=and)\s → beseda, ki sledi "and"
+- ^ → začetek vrstice
+- \.\s → pika in presledek (konec stavka)
+- ([a-z]+) → zajame besedo
+
+PRIMER:
+'Buying cheese AND salami AND wine AND bread. Soup AND veggies.'
+
+REZULTAT:
+['buying', 'salami', 'wine', 'bread', 'soup', 'veggies']
+
+
+============================================================
+2) BESEDE: SAMOGLASNIK → SOGLASNIK
+============================================================
+
+KODA:
+poisci = re.compile(r'\b[aeiou][a-z]*[^aeiou.\s]\b', re.IGNORECASE)
+
+RAZLAGA:
+- \b → meja besede
+- [aeiou] → začne se s samoglasnikom
+- [a-z]* → sredina besede
+- [^aeiou.\s] → konča se s soglasnikom
+- \b → konec besede
+
+PRIMER:
+'ABC ded aba UEB AOB. aaa ded aba UEB aoa.'
+
+REZULTAT:
+['aba', 'ded', 'aba']
+
+
+============================================================
+3) BESEDE V OKLEPAJIH
+============================================================
+
+KODA 1:
+poisci = re.compile(r'\(([^)]+)\)')
+
+RAZLAGA:
+- \( \) → oklepaji
+- ([^)]+) → vse znotraj oklepajev
+
+KODA 2:
+poisci = re.compile(r'(?<=\()[^()]+(?=\))')
+
+RAZLAGA:
+- (?<=\() → pred tem mora biti (
+- [^()]+ → karkoli razen oklepajev
+- (?=\)) → za tem mora biti )
+
+PRIMER:
+'Tezka naloga (3.naloga) ... (prva) naloga.'
+
+REZULTAT:
+['3.naloga', 'prva']
+
+
+============================================================
+4) 5-MESTNI PALINDROMI
+============================================================
+
+KODA:
+p = re.compile(r'(\d)(\d)(\d)\2\1')
+
+RAZLAGA:
+- (\d) → prva cifra
+- (\d) → druga cifra
+- (\d) → tretja cifra
+- \2 → enaka 2. cifri
+- \1 → enaka 1. cifri
+
+PRIMER:
+'12321 11111 98789'
+
+REZULTAT:
+12321
+11111
+98789
+
+
+============================================================
+5) TRIMESTNE BESEDE BREZ ŠTEVIL OKOLI
+============================================================
+
+KODA:
+poisci = re.compile(r'(?<!\d)[a-z]{3}(?!\d)', re.IGNORECASE)
+
+RAZLAGA:
+- (?<!\d) → pred tem ni številke
+- [a-z]{3} → točno 3 črke
+- (?!\d) → za tem ni številke
+
+PRIMER:
+'12321balsadas111 spj 98789 asd 21234'
+
+REZULTAT:
+['asd']
