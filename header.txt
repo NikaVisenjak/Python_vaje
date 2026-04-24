@@ -1,0 +1,4 @@
+def create_header(message: bytes) -> bytes:
+    length = len(message)
+    header = f"{length:010}".encode("utf-8")  # vedno 10 bajtov
+    return header
