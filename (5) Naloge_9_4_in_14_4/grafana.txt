@@ -1,0 +1,30 @@
+direktno v Grafana brskalniku
+
+1. Prijava
+Odpri http://127.0.0.1:3000 in se prijavi z x / x.
+
+2. Ustvari novi Dashboard
+Levi meni → Dashboards → New → New Dashboard.
+
+3. Dodaj prvi panel (Temperature T1 in T2)
+Klikni Add visualization → izberi Data source "InfluxDB Naloga 1".
+V query editorju spodaj nastavi:
+
+FROM: Naloga 1 → measurement Temperature
+SELECT: field T1 → klikni + in dodaj še T2
+
+Ali v raw query načinu (gumb Code) vpiši:
+SELECT "T1", "T2" FROM "Naloga 1"."autogen"."Temperature" WHERE $timeFilter
+oz SELECT "T1", "T2" FROM "Temperature" WHERE $timeFilter, naloga 1 je default
+Zgoraj desno poimenuj panel npr. "Temperatura" → klikni Apply.
+
+4. Dodaj drugi panel (Pritisk P1 in P2)
+Na dashboardu klikni Add → Visualization → spet izberi "InfluxDB Naloga 1".
+V raw query načinu:
+SELECT "P1", "P2" FROM "Naloga 1"."autogen"."Pressure" WHERE $timeFilter
+Poimenuj panel "Pritisk" → klikni Apply.
+
+5. Shrani Dashboard
+Zgoraj desno ikona 💾 → vpiši ime (npr. Moj Dashboard) → Save.
+
+$timeFilter je Grafanin spremenljivka, ki samodejno filtrira podatke glede na časovno okno, ki ga izbereš zgoraj desno v Grafani (npr. "Last 1 hour"). Vedno jo dodaj v WHERE.

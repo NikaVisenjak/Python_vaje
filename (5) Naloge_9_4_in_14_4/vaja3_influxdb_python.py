@@ -13,11 +13,11 @@ from datetime import datetime
 # ----------------------------------------------------------------
 # Parametri za povezavo na InfluxDB server
 # ----------------------------------------------------------------
-HOST = '127.0.0.1'
-PORT = 1234
-USER = 'guest'
-PASSWORD = 'guest'
-DB_NAME = 'mojDatabase_python'   # ime svojega database-a
+HOST = '149.62.71.186'
+PORT = 8086
+USER = 'admin'
+PASSWORD = 'fis_influx'
+DB_NAME = 'mojDatabase'   # ime svojega database-a
 
 # Ustvari klientov objekt — ta objekt upravljamo za vse operacije
 client = InfluxDBClient(HOST, PORT, USER, PASSWORD)
@@ -37,9 +37,9 @@ print(f"[a] Aktivni database: {DB_NAME}")
 
 # Grafana: v Grafani ročno dodaj Data source:
 #   Type: InfluxDB
-#   URL: http://127.0.0.1:1234
+#   URL: http://149.62.71.186:8086
 #   Database: mojDatabase_python
-#   User: guest, Password: guest
+#   User: admin, Password: fis_influx
 
 
 # ================================================================
